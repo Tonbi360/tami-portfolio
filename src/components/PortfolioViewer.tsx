@@ -15,7 +15,6 @@ export default function PortfolioViewer({
   useEffect(() => {
     if (!project) return
 
-    const previousOverflow = document.body.style.overflow
     const previousActive = document.activeElement as HTMLElement | null
 
     const onKey = (e: KeyboardEvent) => {
