@@ -307,29 +307,6 @@ html.dark .navbar {
   text-align: center;
 }
 
-.footer-admin {
-  position: fixed;
-  bottom: 20px;
-  left: 20px;
-  z-index: 40;
-  padding: 8px 16px;
-  border-radius: 999px;
-  border: 1px solid var(--border);
-  background: var(--bg-alt);
-  color: var(--muted);
-  font-size: 0.8rem;
-  font-weight: 600;
-  cursor: pointer;
-  opacity: 0.7;
-  transition: opacity 0.2s, color 0.2s, border-color 0.2s;
-}
-
-.footer-admin:hover {
-  opacity: 1;
-  color: var(--accent);
-  border-color: var(--accent);
-}
-
 /* ---------- Home ---------- */
 .home {
   max-width: var(--maxw);
@@ -459,12 +436,24 @@ html.dark .navbar {
   gap: 8px;
   padding: 6px 14px;
   border-radius: 999px;
-  background: rgba(16, 185, 129, 0.12);
-  color: #059669;
-  border: 1px solid rgba(16, 185, 129, 0.3);
+  background: var(--bg);
+  color: var(--ink-soft);
+  border: 1px solid var(--border);
   font-size: 0.8rem;
   font-weight: 600;
   margin-bottom: 18px;
+}
+
+.status-badge[data-status='available'] {
+  background: rgba(16, 185, 129, 0.12);
+  color: #059669;
+  border-color: rgba(16, 185, 129, 0.3);
+}
+
+.status-badge[data-status='booked'] {
+  background: rgba(239, 68, 68, 0.12);
+  color: #dc2626;
+  border-color: rgba(239, 68, 68, 0.3);
 }
 
 .status-dot {
@@ -491,6 +480,11 @@ html.dark .navbar {
   height: 8px;
   border-radius: 50%;
   background: #10b981;
+}
+
+.status-dot[data-status='booked']::before,
+.status-dot[data-status='booked']::after {
+  background: #ef4444;
 }
 
 @keyframes ping {
@@ -751,35 +745,34 @@ html.dark .navbar {
 
 .lightbox-content {
   position: relative;
-  width: 100%;
-  max-width: min(900px, 92vw);
-  max-height: 92vh;
-  margin: 0;
-  background: var(--card-bg);
-  border-radius: 16px;
-  overflow: auto;
-  box-shadow: 0 25px 60px -15px rgba(0, 0, 0, 0.6);
-  cursor: default;
   display: flex;
   flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: auto;
+  max-width: 90vw;
+  margin: 0;
+  cursor: default;
 }
 
 .lightbox-content img {
   display: block;
   width: auto;
-  max-width: 100%;
-  max-height: 68vh;
+  max-width: 90vw;
+  max-height: 85vh;
   height: auto;
   margin: 0 auto;
   object-fit: contain;
-  background: #000;
-  flex-shrink: 0;
+  border-radius: 12px; /* rounded-xl */
+  box-shadow: 0 25px 60px -15px rgba(0, 0, 0, 0.6); /* shadow-2xl */
 }
 
 .lightbox-caption {
-  padding: 16px 20px;
+  padding: 18px 8px 4px;
+  text-align: center;
   display: flex;
   flex-direction: column;
+  align-items: center;
   gap: 8px;
 }
 
@@ -929,7 +922,8 @@ html.dark .navbar {
 }
 
 .modal-form input,
-.modal-form textarea {
+.modal-form textarea,
+.modal-form select {
   padding: 12px 14px;
   border-radius: 10px;
   border: 1px solid var(--border);
@@ -938,13 +932,44 @@ html.dark .navbar {
   font-size: 1rem;
   font-family: var(--sans);
   resize: vertical;
+  width: 100%;
 }
 
 .modal-form input:focus,
-.modal-form textarea:focus {
+.modal-form textarea:focus,
+.modal-form select:focus {
   outline: none;
   border-color: var(--accent);
   box-shadow: 0 0 0 3px var(--accent-soft);
+}
+
+/* Custom select dropdown */
+.select-wrap {
+  position: relative;
+  display: block;
+}
+
+.select-wrap select {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  padding-right: 40px;
+  cursor: pointer;
+}
+
+.select-wrap select::-ms-expand {
+  display: none;
+}
+
+.select-chevron {
+  position: absolute;
+  top: 50%;
+  right: 14px;
+  transform: translateY(-50%);
+  width: 18px;
+  height: 18px;
+  color: var(--muted);
+  pointer-events: none;
 }
 
 .modal-submit {
@@ -1003,6 +1028,89 @@ html.dark .navbar {
 .modal-sent p {
   color: var(--muted);
   margin: 0 0 20px;
+}
+
+/* ---------- Admin availability toggle ---------- */
+.avail-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 14px 16px;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  background: var(--bg);
+  margin-bottom: 18px;
+}
+
+.avail-label {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.toggle {
+  position: relative;
+  width: 46px;
+  height: 26px;
+  border-radius: 999px;
+  border: none;
+  background: #e2e8f0;
+  cursor: pointer;
+  transition: background 0.2s;
+  flex-shrink: 0;
+}
+
+html.dark .toggle {
+  background: #334155;
+}
+
+.toggle-on {
+  background: #10b981;
+}
+
+.toggle-knob {
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: #fff;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.25);
+  transition: transform 0.2s;
+}
+
+.toggle-on .toggle-knob {
+  transform: translateX(20px);
+}
+
+.inbox-heading {
+  font-size: 1.05rem;
+  margin: 0 0 12px;
+  color: var(--ink);
+}
+
+.inbox-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin: 8px 0 4px;
+}
+
+.chip {
+  display: inline-flex;
+  padding: 3px 10px;
+  border-radius: 999px;
+  background: var(--accent-soft);
+  color: var(--accent);
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+/* ---------- Navbar hidden on scroll down ---------- */
+.navbar.hidden {
+  transform: translateY(-100%);
 }
 
 /* ---------- Admin inbox ---------- */

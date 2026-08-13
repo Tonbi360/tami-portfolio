@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { Link, NavLink } from 'react-router-dom'
 
 const links = [
@@ -30,6 +30,8 @@ const MoonIcon = () => (
 export default function Navbar() {
   const [open, setOpen] = useState(false)
   const [dark, setDark] = useState(false)
+  const [hidden, setHidden] = useState(false)
+  const lastScroll = useRef(0)
 
   useEffect(() => {
     setDark(getInitialDark())
@@ -40,8 +42,18 @@ export default function Navbar() {
     localStorage.setItem('theme', dark ? 'dark' : 'light')
   }, [dark])
 
+  useEffect(() => {
+    const onScroll = () => {
+      const y = window.scrollY
+      setHidden(y > lastScroll.current && y > 80)
+      lastScroll.current = y
+    }
+    window.addEventListener('scroll', onScroll)
+    return () => window.removeEventListener('scroll', onScroll)
+  }, [])
+
   return (
-    <header className="navbar">
+    <header className={`navbar${hidden ? ' hidden' : ''}`}>
       <div className="navbar-inner">
         <Link to="/" className="brand" onClick={() => setOpen(false)}>
           <span className="brand-dot" aria-hidden="true" />

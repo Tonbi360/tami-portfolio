@@ -1,4 +1,4 @@
-import { createContext, useContext, useState, useCallback, type ReactNode } from 'react'
+import { createContext, useContext, useState, useCallback, useEffect, type ReactNode } from 'react'
 
 export type AdminMessage = {
   id: string
@@ -6,6 +6,9 @@ export type AdminMessage = {
   contact: string
   message: string
   timestamp: number
+  service?: string
+  budget?: string
+  deadline?: string
 }
 
 type AppContextType = {
@@ -13,20 +16,40 @@ type AppContextType = {
   contactPrefill: string
   openContact: (prefill?: string) => void
   closeContact: () => void
+  noteOpen: boolean
+  notePrefill: string
+  openNote: (prefill?: string) => void
+  closeNote: () => void
   adminOpen: boolean
   openAdmin: () => void
   closeAdmin: () => void
   toast: string | null
   showToast: (msg: string) => void
+  available: boolean
+  setAvailable: (v: boolean) => void
 }
 
+const AVAIL_KEY = 'availabilityStatus'
 const AppContext = createContext<AppContextType | null>(null)
 
 export function AppProvider({ children }: { children: ReactNode }) {
   const [contactOpen, setContactOpen] = useState(false)
   const [contactPrefill, setContactPrefill] = useState('')
+  const [noteOpen, setNoteOpen] = useState(false)
+  const [notePrefill, setNotePrefill] = useState('')
   const [adminOpen, setAdminOpen] = useState(false)
   const [toast, setToast] = useState<string | null>(null)
+  const [available, setAvailableState] = useState(true)
+
+  useEffect(() => {
+    const stored = localStorage.getItem(AVAIL_KEY)
+    if (stored !== null) setAvailableState(stored === 'true')
+  }, [])
+
+  const setAvailable = useCallback((v: boolean) => {
+    setAvailableState(v)
+    localStorage.setItem(AVAIL_KEY, v ? 'true' : 'false')
+  }, [])
 
   const openContact = useCallback((prefill = '') => {
     setContactPrefill(prefill)
@@ -36,6 +59,16 @@ export function AppProvider({ children }: { children: ReactNode }) {
   const closeContact = useCallback(() => {
     setContactOpen(false)
     setContactPrefill('')
+  }, [])
+
+  const openNote = useCallback((prefill = '') => {
+    setNotePrefill(prefill)
+    setNoteOpen(true)
+  }, [])
+
+  const closeNote = useCallback(() => {
+    setNoteOpen(false)
+    setNotePrefill('')
   }, [])
 
   const openAdmin = useCallback(() => setAdminOpen(true), [])
@@ -53,11 +86,17 @@ export function AppProvider({ children }: { children: ReactNode }) {
         contactPrefill,
         openContact,
         closeContact,
+        noteOpen,
+        notePrefill,
+        openNote,
+        closeNote,
         adminOpen,
         openAdmin,
         closeAdmin,
         toast,
         showToast,
+        available,
+        setAvailable,
       }}
     >
       {children}

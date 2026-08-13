@@ -34,17 +34,30 @@ export default function LightboxModal({
   }
 
   const shareDesign = async () => {
-    try {
-      await navigator.clipboard.writeText(window.location.href)
-      showToast('Link copied to clipboard!')
-    } catch {
-      const ta = document.createElement('textarea')
-      ta.value = window.location.href
-      document.body.appendChild(ta)
-      ta.select()
-      document.execCommand('copy')
-      document.body.removeChild(ta)
-      showToast('Link copied to clipboard!')
+    const url = window.location.href
+    if (navigator.share) {
+      try {
+        await navigator.share({
+          title: `Ogolo Tamuno — ${project.title}`,
+          text: `Check out this design by Ogolo Tamuno (@tami_noi)`,
+          url,
+        })
+      } catch {
+        // User dismissed the share sheet — no action needed
+      }
+    } else {
+      try {
+        await navigator.clipboard.writeText(url)
+        showToast('Link copied to clipboard!')
+      } catch {
+        const ta = document.createElement('textarea')
+        ta.value = url
+        document.body.appendChild(ta)
+        ta.select()
+        document.execCommand('copy')
+        document.body.removeChild(ta)
+        showToast('Link copied to clipboard!')
+      }
     }
   }
 
@@ -53,9 +66,9 @@ export default function LightboxModal({
       <button className="lightbox-close" aria-label="Close" onClick={onClose}>
         ×
       </button>
-      <figure className="lightbox-content" onClick={(e) => e.stopPropagation()}>
+      <div className="lightbox-content" onClick={(e) => e.stopPropagation()}>
         <img src={project.image} alt={`${project.title} — ${project.category}`} />
-        <figcaption className="lightbox-caption">
+        <div className="lightbox-caption">
           <h3>{project.title}</h3>
           <p className="card-tag">{project.category}</p>
           <div className="lightbox-actions">
@@ -66,8 +79,8 @@ export default function LightboxModal({
               Share Design
             </button>
           </div>
-        </figcaption>
-      </figure>
+        </div>
+      </div>
     </div>
   )
 }

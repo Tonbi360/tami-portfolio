@@ -31,3 +31,10 @@
   - [x] Remove unused imports / console.logs (verified clean — none found)
   - [x] TypeScript compiles (tsc --noEmit passed)
 - [x] Production build passes (0 errors, 39 modules)
+- [x] Tonight's Fixes:
+  - [x] Native Web Share API for Share button (navigator.share)
+  - [x] Direct mailto on email link (removed preventDefault copy handler)
+  - [x] Admin availability toggle (🟢/🔴) persisted to `availabilityStatus`
+  - [x] Multi-field inquiry form → `tami_messages`
+  - [x] Smart scroll navbar (hide down / show up) via `navbar.hidden`
+  - [x] Lightbox full image no clipping (object-contain, max-h 80vh)

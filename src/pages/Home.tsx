@@ -31,31 +31,15 @@ const icons = [
 ]
 
 export default function Home() {
-  const { showToast } = useApp()
-
-  const copyEmail = async (e: React.MouseEvent) => {
-    e.preventDefault()
-    try {
-      await navigator.clipboard.writeText(EMAIL)
-    } catch {
-      // fallback for non-secure contexts
-      const ta = document.createElement('textarea')
-      ta.value = EMAIL
-      document.body.appendChild(ta)
-      ta.select()
-      document.execCommand('copy')
-      document.body.removeChild(ta)
-    }
-    showToast('Email copied to clipboard!')
-  }
+  const { openContact, available } = useApp()
 
   return (
     <section className="home">
       <div className="hero-wrap">
         <div className="hero-text">
-          <div className="status-badge">
-            <span className="status-dot" />
-            Available for New Projects (2026)
+          <div className="status-badge" data-status={available ? 'available' : 'booked'}>
+            <span className="status-dot" data-status={available ? 'available' : 'booked'} />
+            <span>{available ? 'Available for Work' : 'Currently Booked'}</span>
           </div>
           <p className="eyebrow">Portfolio 2026</p>
           <h1 className="hero-name">{designer.name}</h1>
@@ -94,14 +78,15 @@ export default function Home() {
         <h2>Have a project in mind?</h2>
         <p>
           Let&apos;s create something great together. Reach out at{' '}
-          <a href={`mailto:${EMAIL}`} onClick={copyEmail}>
+          <a href={`mailto:${EMAIL}`}>
             {EMAIL}
           </a>
         </p>
-        <a href={`mailto:${EMAIL}`} onClick={copyEmail} className="cta-btn">
-          Start a Project →
-        </a>
+        <button type="button" onClick={() => openContact()} className="cta-btn">
+          Work With Me →
+        </button>
       </div>
     </section>
   )
 }
+

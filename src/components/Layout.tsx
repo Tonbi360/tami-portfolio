@@ -4,6 +4,7 @@ import Navbar from './Navbar'
 import Footer from './Footer'
 import FloatingMessage from './FloatingMessage'
 import MessageModal from './MessageModal'
+import NoteModal from './NoteModal'
 import AdminInbox from './AdminInbox'
 import Toast from './Toast'
 
@@ -13,6 +14,7 @@ function GlobalModals() {
     <>
       <FloatingMessage />
       <MessageModal />
+      <NoteModal />
       <AdminInbox />
       {toast && <Toast message={toast} />}
     </>

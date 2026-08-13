@@ -13,7 +13,7 @@ function loadMessages(): AdminMessage[] {
 }
 
 export default function AdminInbox() {
-  const { adminOpen, closeAdmin } = useApp()
+  const { adminOpen, closeAdmin, available, setAvailable } = useApp()
   const [pin, setPin] = useState('')
   const [unlocked, setUnlocked] = useState(false)
   const [error, setError] = useState(false)
@@ -92,7 +92,24 @@ export default function AdminInbox() {
           </>
         ) : (
           <>
-            <h3 className="modal-title">Inbox ({messages.length})</h3>
+            <h3 className="modal-title">Admin Panel</h3>
+
+            <div className="avail-card">
+              <span className="avail-label">
+                {available ? '🟢 Available for Work' : '🔴 Currently Booked'}
+              </span>
+              <button
+                className={`toggle ${available ? 'toggle-on' : ''}`}
+                role="switch"
+                aria-checked={available}
+                aria-label="Toggle availability"
+                onClick={() => setAvailable(!available)}
+              >
+                <span className="toggle-knob" />
+              </button>
+            </div>
+
+            <h4 className="inbox-heading">Inbox ({messages.length})</h4>
             {messages.length === 0 ? (
               <p className="modal-empty">No messages yet.</p>
             ) : (
@@ -102,6 +119,11 @@ export default function AdminInbox() {
                     <div className="inbox-head">
                       <strong>{m.name}</strong>
                       <span className="inbox-contact">{m.contact}</span>
+                    </div>
+                    <div className="inbox-meta">
+                      {m.service && <span className="chip">{m.service}</span>}
+                      {m.budget && <span className="chip">{m.budget}</span>}
+                      {m.deadline && <span className="chip">{m.deadline}</span>}
                     </div>
                     <p className="inbox-text">{m.message}</p>
                     <span className="inbox-time">{formatDate(m.timestamp)}</span>
