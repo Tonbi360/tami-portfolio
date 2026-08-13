@@ -67,7 +67,9 @@ export default function LightboxModal({
         ×
       </button>
       <div className="lightbox-content" onClick={(e) => e.stopPropagation()}>
-        <img src={project.image} alt={`${project.title} — ${project.category}`} />
+        <div className="lightbox-media">
+          <img src={project.image} alt={`${project.title} — ${project.category}`} />
+        </div>
         <div className="lightbox-caption">
           <h3>{project.title}</h3>
           <p className="card-tag">{project.category}</p>

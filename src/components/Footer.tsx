@@ -70,7 +70,6 @@ export default function Footer() {
           <Link to="/flyers">Flyers</Link>
           <Link to="/brands">Brands</Link>
           <Link to="/banners">Banners</Link>
-          <a href="mailto:tami_noi@gmail.com">Email</a>
         </nav>
         <div className="footer-socials">
           {socials.map((s) => (
@@ -94,3 +93,4 @@ export default function Footer() {
     </footer>
   )
 }
+

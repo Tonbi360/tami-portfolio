@@ -1,40 +1,9 @@
-# Task: Map all renamed portfolio assets to correct pages
+# Modal & Popup Overflow Fix — TODO
 
-## Steps
-- [x] Understand the codebase (read data + page + component + CSS files)
-- [x] Get plan approved by user
-- [x] Update `src/data/portfolio.ts`:
-  - [x] `flyers` → 11 exact projects
-  - [x] `brands` → 7 exact projects
-  - [x] `banners` → 2 exact projects
-- [x] Update `src/pages/Flyers.tsx` to remove `page-grid-bg` (clean background)
-- [x] Update `src/style.css`:
-  - [x] Hero image `object-cover` + `rounded-2xl shadow-xl`
-  - [x] Card hover effects (`-translate-y-1 transition-all duration-300`)
-- [x] Gallery uses `item.id` as key + lightbox
-- [x] Hero copy (name/handle/subtitle) verified in data
-- [x] Agency polish features:
-  - [x] Dark mode toggle
-  - [x] Message form modal (FAB at bottom)
-  - [x] Category filter pills on Flyers
-  - [x] Lightbox with "Request Similar Work" + "Share Design"
-  - [x] OpenGraph / Twitter meta tags
-  - [x] Page fade-in transitions
-  - [x] Image lazy loading
-  - [x] Toast notifications
-- [x] Fix lightbox full-image view (contain fit, no clipping)
-- [x] Security & UI:
-  - [x] Remove visible "Admin" link/button from footer
-  - [x] Secret 5-tap trigger on `@tami_noi` footer handle (within 3s) → admin PIN
-- [x] Navbar sticky + smooth scroll appearance (blur, translucent)
-- [x] Codebase cleanup:
-  - [x] Remove unused imports / console.logs (verified clean — none found)
-  - [x] TypeScript compiles (tsc --noEmit passed)
-- [x] Production build passes (0 errors, 39 modules)
-- [x] Tonight's Fixes:
-  - [x] Native Web Share API for Share button (navigator.share)
-  - [x] Direct mailto on email link (removed preventDefault copy handler)
-  - [x] Admin availability toggle (🟢/🔴) persisted to `availabilityStatus`
-  - [x] Multi-field inquiry form → `tami_messages`
-  - [x] Smart scroll navbar (hide down / show up) via `navbar.hidden`
-  - [x] Lightbox full image no clipping (object-contain, max-h 80vh)
+- [x] 1. Constrain `.lightbox-content` and its image within viewport + allow vertical scroll
+- [x] 2. Make generic modals (`.modal`, `.modal-wide`) scrollable with max-height (no device overflow)
+- [x] 3. Remove the "Email" nav link that appears after "Banners" in the footer
+- [x] 4. Verify the "Reach out at" mailto link in Home works (already functional)
+- [x] 5. Fix root cause of full-view overflow (flexbox top-clipping)
+- [x] 6. Remove the full-view (lightbox) modal from the gallery entirely — clicking an image no longer opens it. Next: redesign the full-view one piece at a time to isolate the issue.
+

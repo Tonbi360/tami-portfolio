@@ -734,46 +734,80 @@ html.dark .navbar {
   position: fixed;
   inset: 0;
   z-index: 1000;
-  background: rgba(0, 0, 0, 0.9);
+  background: rgba(0, 0, 0, 0.75);
   backdrop-filter: blur(8px);
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 24px;
+  padding: 40px;
   cursor: pointer;
+  overflow: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* keep scrolling on the overlay but hide visible scrollbars */
+.lightbox,
+.lightbox-content {
+  -ms-overflow-style: none; /* IE/Edge */
+  scrollbar-width: none; /* Firefox */
+}
+.lightbox::-webkit-scrollbar,
+.lightbox-content::-webkit-scrollbar {
+  display: none;
+  width: 0;
+  height: 0;
 }
 
 .lightbox-content {
   position: relative;
+  width: auto;
+  max-width: min(1100px, 95vw);
+  margin: auto;
+  cursor: default;
+  background: var(--bg-alt);
+  border-radius: 18px;
+  padding: 18px;
+  box-shadow: 0 25px 60px -15px rgba(0, 0, 0, 0.6); /* shadow-2xl */
+  overflow: visible;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  width: auto;
-  max-width: 90vw;
-  margin: 0;
-  cursor: default;
+  gap: 16px;
 }
 
 .lightbox-content img {
   display: block;
   width: auto;
-  max-width: 90vw;
-  max-height: 85vh;
   height: auto;
+  max-width: 100%;
+  max-height: 75vh;
   margin: 0 auto;
   object-fit: contain;
-  border-radius: 12px; /* rounded-xl */
-  box-shadow: 0 25px 60px -15px rgba(0, 0, 0, 0.6); /* shadow-2xl */
+  border-radius: 14px; /* rounded-xl */
+}
+
+/* Media wrapper to control image sizing without shrinking content */
+.lightbox-media {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.lightbox-media img {
+  max-width: 100%;
+  max-height: 75vh;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  border-radius: 12px;
 }
 
 .lightbox-caption {
   padding: 18px 8px 4px;
   text-align: center;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 8px;
+  display: block;
 }
 
 .lightbox-caption h3 {
