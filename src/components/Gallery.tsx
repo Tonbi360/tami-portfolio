@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import type { Project } from '../data/portfolio'
-import LightboxModal from './LightboxModal'
+import ProjectPreview from './ProjectPreview'
 
 export default function Gallery({ items }: { items: Project[] }) {
   const [selected, setSelected] = useState<Project | null>(null)
@@ -24,7 +24,7 @@ export default function Gallery({ items }: { items: Project[] }) {
           </figure>
         ))}
       </div>
-      <LightboxModal project={selected} onClose={() => setSelected(null)} />
+      <ProjectPreview project={selected} onClose={() => setSelected(null)} />
     </>
   )
 }

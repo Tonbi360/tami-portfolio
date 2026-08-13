@@ -16,6 +16,10 @@ type AppContextType = {
   contactPrefill: string
   openContact: (prefill?: string) => void
   closeContact: () => void
+  requestOpen: boolean
+  requestPrefill: string
+  openRequest: (prefill?: string) => void
+  closeRequest: () => void
   noteOpen: boolean
   notePrefill: string
   openNote: (prefill?: string) => void
@@ -35,6 +39,8 @@ const AppContext = createContext<AppContextType | null>(null)
 export function AppProvider({ children }: { children: ReactNode }) {
   const [contactOpen, setContactOpen] = useState(false)
   const [contactPrefill, setContactPrefill] = useState('')
+  const [requestOpen, setRequestOpen] = useState(false)
+  const [requestPrefill, setRequestPrefill] = useState('')
   const [noteOpen, setNoteOpen] = useState(false)
   const [notePrefill, setNotePrefill] = useState('')
   const [adminOpen, setAdminOpen] = useState(false)
@@ -59,6 +65,16 @@ export function AppProvider({ children }: { children: ReactNode }) {
   const closeContact = useCallback(() => {
     setContactOpen(false)
     setContactPrefill('')
+  }, [])
+
+  const openRequest = useCallback((prefill = '') => {
+    setRequestPrefill(prefill)
+    setRequestOpen(true)
+  }, [])
+
+  const closeRequest = useCallback(() => {
+    setRequestOpen(false)
+    setRequestPrefill('')
   }, [])
 
   const openNote = useCallback((prefill = '') => {
@@ -97,6 +113,10 @@ export function AppProvider({ children }: { children: ReactNode }) {
         showToast,
         available,
         setAvailable,
+        requestOpen,
+        requestPrefill,
+        openRequest,
+        closeRequest,
       }}
     >
       {children}

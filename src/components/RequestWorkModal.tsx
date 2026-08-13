@@ -1,7 +1,7 @@
-import { useState, useEffect, type FormEvent } from 'react'
+import { useEffect, useRef, useState, type FormEvent } from 'react'
+import { createPortal } from 'react-dom'
 import { useApp } from '../context/AppContext'
-
-const STORAGE_KEY = 'tami_messages'
+import { lockBodyScroll, unlockBodyScroll } from '../utils/scrollLock'
 
 const SERVICES = [
   'Social Media Flyer',
@@ -10,8 +10,10 @@ const SERVICES = [
   'Other',
 ]
 
-export default function MessageModal() {
-  const { contactOpen, contactPrefill, closeContact } = useApp()
+const STORAGE_KEY = 'tami_messages'
+
+export default function RequestWorkModal() {
+  const { requestOpen, requestPrefill, closeRequest } = useApp()
   const [name, setName] = useState('')
   const [contact, setContact] = useState('')
   const [service, setService] = useState(SERVICES[0])
@@ -19,28 +21,36 @@ export default function MessageModal() {
   const [deadline, setDeadline] = useState('')
   const [message, setMessage] = useState('')
   const [sent, setSent] = useState(false)
+  const closeButtonRef = useRef<HTMLButtonElement | null>(null)
 
   useEffect(() => {
-    if (contactOpen) {
-      setSent(false)
-      setMessage(contactPrefill)
-    }
-  }, [contactOpen, contactPrefill])
+    if (!requestOpen) return
+    setSent(false)
+    setMessage(requestPrefill)
+  }, [requestOpen, requestPrefill])
 
   useEffect(() => {
-    if (!contactOpen) return
+    if (!requestOpen) return
+
+    const previousOverflow = document.body.style.overflow
+    const previousActive = document.activeElement as HTMLElement | null
+
     const onKey = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') closeContact()
+      if (e.key === 'Escape') closeRequest()
     }
+
     document.addEventListener('keydown', onKey)
-    document.body.style.overflow = 'hidden'
+    lockBodyScroll()
+    closeButtonRef.current?.focus()
+
     return () => {
       document.removeEventListener('keydown', onKey)
-      document.body.style.overflow = ''
+      unlockBodyScroll()
+      previousActive?.focus?.()
     }
-  }, [contactOpen, closeContact])
+  }, [requestOpen, closeRequest])
 
-  if (!contactOpen) return null
+  if (!requestOpen) return null
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault()
@@ -64,26 +74,24 @@ export default function MessageModal() {
     setMessage('')
   }
 
-  return (
-    <div className="modal-backdrop" onClick={closeContact}>
-      <div className="modal modal-wide" onClick={(e) => e.stopPropagation()}>
-        <button className="modal-close" aria-label="Close" onClick={closeContact}>
+  return createPortal(
+    <div className="modal-backdrop" onClick={closeRequest}>
+      <div className="modal modal-work" onClick={(e) => e.stopPropagation()}>
+        <button className="modal-close" aria-label="Close" onClick={closeRequest} ref={closeButtonRef}>
           ×
         </button>
         {sent ? (
-          <div className="modal-body">
-            <div className="modal-sent">
-              <span className="modal-sent-icon">✓</span>
-              <h3>Inquiry Sent to Tami! ✓</h3>
-              <p>Thanks for reaching out — Tami will get back to you soon.</p>
-              <button className="btn btn-primary" onClick={closeContact}>
-                Done
-              </button>
-            </div>
+          <div className="modal-sent">
+            <span className="modal-sent-icon">✓</span>
+            <h3>Inquiry Sent to Tami! ✓</h3>
+            <p>Thanks for reaching out — Tami will get back to you soon.</p>
+            <button className="btn btn-primary" onClick={closeRequest}>
+              Done
+            </button>
           </div>
         ) : (
-          <div className="modal-body">
-            <h3 className="modal-title">Work With Me</h3>
+          <>
+            <h3 className="modal-title">Request Similar Work</h3>
             <form className="modal-form" onSubmit={handleSubmit}>
               <label>
                 Name
@@ -161,9 +169,10 @@ export default function MessageModal() {
                 Send Inquiry
               </button>
             </form>
-          </div>
+          </>
         )}
       </div>
-    </div>
+    </div>,
+    document.body,
   )
 }
