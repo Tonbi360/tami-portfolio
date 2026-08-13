@@ -11,11 +11,12 @@ export const designer = {
   title: 'Graphic Designer',
   tagline:
     'Hi! I am a designer. This is what I can do and how I can help you in 2026.',
-  heroImage: '/images/hero-id-card.png',
+  heroImage: '/images/hero-id-card.jpg',
   bgGrid: '/images/bg-isometric-grid.jpg',
 }
 
 export type Project = {
+  id: string
   image: string
   title: string
   category: string
@@ -24,102 +25,32 @@ export type Project = {
 
 // ---------- PAGE 2: SOCIAL MEDIA FLYERS ----------
 export const flyers: Project[] = [
-  {
-    image: '/images/flyer-oma-chioma.png',
-    title: 'Oma Chioma',
-    category: 'Birthday Flyer',
-  },
-  {
-    image: '/images/flyer-sports-tryout.jpg',
-    title: 'Sports Tryout',
-    category: 'Event Flyer',
-  },
-  {
-    image: '/images/flyer-adesuwa-glyde.jpg',
-    title: 'Adesuwa',
-    category: 'Birthday Flyer',
-  },
-  {
-    image: '/images/flyer-olite-stationery.jpg',
-    title: 'Back to School',
-    category: 'Stationery Flyer',
-  },
-  {
-    image: '/images/flyer-year-end-sales.jpg',
-    title: 'Year-End Sales',
-    category: 'Promo Flyer',
-  },
-  {
-    image: '/images/flyer-aces-derby.jpg',
-    title: 'Aces Derby',
-    category: 'Sports Graphic',
-  },
-  {
-    image: '/images/flyer-aces-tryout.jpg',
-    title: 'Aces Tryout',
-    category: 'Sports Flyer',
-  },
-  {
-    image: '/images/flyer-world-tammy-day.jpg',
-    title: "World Tami's Day",
-    category: 'Celebration Flyer',
-  },
-  {
-    image: '/images/flyer-queen-of-beauty.jpg',
-    title: 'Queen of Beauty',
-    category: 'Pageant Flyer',
-  },
-  {
-    image: '/images/flyer-new-year-2026.jpg',
-    title: 'Happy New Year 2026',
-    category: 'Festive Flyer',
-  },
+  { id: '1', title: 'Oma Chioma', category: 'BIRTHDAY FLYER', image: '/images/flyer-oma-chioma.jpg' },
+  { id: '2', title: 'Sports Tryout', category: 'EVENT FLYER', image: '/images/flyer-sports-tryout.jpg' },
+  { id: '3', title: 'Back to School', category: 'STATIONERY FLYER', image: '/images/flyer-olite-stationery.jpg' },
+  { id: '4', title: 'Adesuwa Esiekpe', category: 'BIRTHDAY FLYER', image: '/images/flyer-adesuwa-glyde.jpg' },
+  { id: '5', title: 'Year-End Sales', category: 'PROMO FLYER', image: '/images/flyer-year-end-sales.jpg' },
+  { id: '6', title: 'ACES Derby', category: 'SPORTS FLYER', image: '/images/flyer-aces-derby.jpg' },
+  { id: '7', title: 'ACES Tryouts', category: 'SPORTS FLYER', image: '/images/flyer-aces-tryout.jpg' },
+  { id: '8', title: 'World Tammy Day', category: 'CELEBRATION FLYER', image: '/images/flyer-world-tammy-day.jpg' },
+  { id: '9', title: 'Queen of Beauty', category: 'PAGEANT FLYER', image: '/images/flyer-queen-of-beauty.jpg' },
+  { id: '10', title: 'Happy New Year 2026', category: 'FESTIVE FLYER', image: '/images/flyer-new-year-2026.jpg' },
+  { id: '11', title: 'October Basketball', category: 'SEASONAL GRAPHIC', image: '/images/graphic-october-basketball.jpg' },
 ]
 
 // ---------- PAGE 3: BRAND DESIGNS ----------
 export const brands: Project[] = [
-  {
-    image: '/images/logo-uc-church.jpg',
-    title: 'UC Church',
-    category: 'Logo & Emblem',
-  },
-  {
-    image: '/images/logo-alpha-omega.jpg',
-    title: 'Alpha Omega',
-    category: 'Logo Design',
-  },
-  {
-    image: '/images/logo-square.jpg',
-    title: 'The Square',
-    category: 'Brand Mark',
-  },
-  {
-    image: '/images/logo-designer-pain.jpg',
-    title: 'Designer Back Pain',
-    category: 'Icon Design',
-  },
-  {
-    image: '/images/logo-tower.jpg',
-    title: 'The Tower',
-    category: 'Logo Design',
-  },
-  {
-    image: '/images/logo-arrow-four.jpg',
-    title: 'Arrow Four',
-    category: 'Logo Design',
-  },
-  {
-    image: '/images/logo-more.jpg',
-    title: 'MORE',
-    category: 'Wordmark',
-  },
+  { id: '1', title: 'Unlimited Teens Church', category: 'CHURCH EMBLEM', image: '/images/logo-uc-church.jpg' },
+  { id: '2', title: 'Alpha Omega', category: 'BRAND MARK', image: '/images/logo-alpha-omega.jpg' },
+  { id: '3', title: 'Square', category: 'IDENTITY DESIGN', image: '/images/logo-square.jpg' },
+  { id: '4', title: 'Designer Back Pain', category: 'CONCEPT LOGO', image: '/images/logo-designer-pain.jpg' },
+  { id: '5', title: 'The Tower', category: 'ICON DESIGN', image: '/images/logo-tower.jpg' },
+  { id: '6', title: 'Arrow Four', category: 'ABSTRACT LOGO', image: '/images/logo-arrow-four.jpg' },
+  { id: '7', title: 'MORE Wordmark', category: 'TYPOGRAPHY LOGO', image: '/images/logo-more.jpg' },
 ]
 
 // ---------- PAGE 4: BANNERS & GRAPHICS ----------
 export const banners: Project[] = [
-  {
-    image: '/images/graphic-october-basketball.jpg',
-    title: 'October / Basketball',
-    category: 'Banner Graphic',
-  },
+  { id: '1', title: 'October / Basketball Graphic', category: 'BANNER & PRINT MEDIA', image: '/images/graphic-october-basketball.jpg' },
+  { id: '2', title: 'Year-End Sales Display Banner', category: 'PRINT PROMO BANNERS', image: '/images/flyer-year-end-sales.jpg' },
 ]

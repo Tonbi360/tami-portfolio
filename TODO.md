@@ -1,0 +1,33 @@
+# Task: Map all renamed portfolio assets to correct pages
+
+## Steps
+- [x] Understand the codebase (read data + page + component + CSS files)
+- [x] Get plan approved by user
+- [x] Update `src/data/portfolio.ts`:
+  - [x] `flyers` → 11 exact projects
+  - [x] `brands` → 7 exact projects
+  - [x] `banners` → 2 exact projects
+- [x] Update `src/pages/Flyers.tsx` to remove `page-grid-bg` (clean background)
+- [x] Update `src/style.css`:
+  - [x] Hero image `object-cover` + `rounded-2xl shadow-xl`
+  - [x] Card hover effects (`-translate-y-1 transition-all duration-300`)
+- [x] Gallery uses `item.id` as key + lightbox
+- [x] Hero copy (name/handle/subtitle) verified in data
+- [x] Agency polish features:
+  - [x] Dark mode toggle
+  - [x] Message form modal (FAB at bottom)
+  - [x] Category filter pills on Flyers
+  - [x] Lightbox with "Request Similar Work" + "Share Design"
+  - [x] OpenGraph / Twitter meta tags
+  - [x] Page fade-in transitions
+  - [x] Image lazy loading
+  - [x] Toast notifications
+- [x] Fix lightbox full-image view (contain fit, no clipping)
+- [x] Security & UI:
+  - [x] Remove visible "Admin" link/button from footer
+  - [x] Secret 5-tap trigger on `@tami_noi` footer handle (within 3s) → admin PIN
+- [x] Navbar sticky + smooth scroll appearance (blur, translucent)
+- [x] Codebase cleanup:
+  - [x] Remove unused imports / console.logs (verified clean — none found)
+  - [x] TypeScript compiles (tsc --noEmit passed)
+- [x] Production build passes (0 errors, 39 modules)
