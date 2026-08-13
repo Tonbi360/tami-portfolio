@@ -7,7 +7,7 @@
 
 export const designer = {
   name: 'Ogolo Tamuno',
-  handle: '@tami_noi',
+  handle: '@tamin.oi',
   title: 'Graphic Designer',
   tagline:
     'Hi! I am a designer. This is what I can do and how I can help you in 2026.',

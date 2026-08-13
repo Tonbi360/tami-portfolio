@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom'
 import { designer } from '../data/portfolio'
 import { useApp } from '../context/AppContext'
 
-const EMAIL = 'tami_noi@gmail.com'
+const EMAIL = 'tamunoipirinyeogolo@gmail.com'
 
 const cards = [
   { to: '/flyers', title: 'Social Media Flyers', desc: 'Birthday, sports & promo flyers' },
